@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossary — Cristian Achiardi · Agentic Design Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+<style>
+/* ─── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── Tokens ─────────────────────────────────────────────── */
+:root {
+  --bg:           oklch(0.985 0.006 255);
+  --surface:      oklch(0.96  0.008 255);
+  --surface-2:    oklch(0.925 0.010 255);
+  --text:         oklch(0.18  0.025 255);
+  --text-2:       oklch(0.42  0.020 255);
+  --text-3:       oklch(0.60  0.012 255);
+  --accent:       oklch(0.48  0.190 265);
+  --accent-dim:   oklch(0.93  0.045 265);
+  --border:       oklch(0.88  0.010 255);
+  --border-mid:   oklch(0.80  0.016 255);
+  --code-bg:      oklch(0.94  0.010 255);
+  --code-text:    oklch(0.38  0.120 265);
+
+  --font-display: 'Barlow Condensed', system-ui, sans-serif;
+  --font-body:    'Figtree', system-ui, sans-serif;
+  --font-mono:    'Fira Code', ui-monospace, monospace;
+
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-6: 24px; --sp-8: 32px; --sp-12: 48px; --sp-16: 64px;
+
+  --header-h: 52px;
+  --sidebar-w: 220px;
+}
+
+/* ─── Base ───────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Language toggle ────────────────────────────────────── */
+[data-lang="en"] .es { display: none; }
+[data-lang="es"] .en { display: none; }
+
+/* ─── Header ─────────────────────────────────────────────── */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--sp-8);
+  z-index: 100;
+}
+
+.header-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.header-title span {
+  display: block;
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  margin-top: 1px;
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+.lang-btn {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: 2px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.lang-btn:hover { color: var(--accent); }
+.lang-btn.active {
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* ─── Layout ─────────────────────────────────────────────── */
+.layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: 100vh;
+  padding-top: var(--header-h);
+}
+
+/* ─── Sidebar ────────────────────────────────────────────── */
+.sidebar {
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100vh - var(--header-h));
+  overflow-y: auto;
+  padding: var(--sp-8) var(--sp-4) var(--sp-8) var(--sp-8);
+  border-right: 1px solid var(--border);
+}
+
+.sidebar-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: var(--sp-4);
+}
+
+.nav-list { list-style: none; }
+
+.nav-list li + li { margin-top: 2px; }
+
+.nav-list a {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-2);
+  text-decoration: none;
+  padding: 5px var(--sp-3);
+  border-radius: 3px;
+  transition: color 0.12s, background 0.12s;
+  line-height: 1.3;
+}
+
+.nav-list a:hover {
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.nav-list a.active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ─── Main content ───────────────────────────────────────── */
+.content {
+  padding: var(--sp-16) var(--sp-12) var(--sp-16) var(--sp-12);
+  max-width: 860px;
+}
+
+/* ─── Sections ───────────────────────────────────────────── */
+.section {
+  padding-top: var(--sp-12);
+  margin-bottom: var(--sp-16);
+}
+
+.section:first-child { padding-top: 0; }
+
+.section + .section {
+  border-top: 1px solid var(--border);
+}
+
+/* ─── Typography ─────────────────────────────────────────── */
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: var(--sp-8);
+  text-transform: uppercase;
+}
+
+.section-subtitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: var(--sp-12);
+  margin-bottom: var(--sp-4);
+}
+
+.term {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-top: var(--sp-8);
+  margin-bottom: var(--sp-2);
+}
+
+.term + p { margin-top: 0; }
+
+p { margin-bottom: var(--sp-4); max-width: 68ch; }
+
+p:last-child { margin-bottom: 0; }
+
+strong { font-weight: 600; color: var(--text); }
+
+em { font-style: italic; color: var(--text-2); }
+
+blockquote {
+  margin: var(--sp-6) 0;
+  padding: var(--sp-4) var(--sp-6);
+  background: var(--accent-dim);
+  border-top: 2px solid var(--accent);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--accent);
+  max-width: 68ch;
+}
+
+/* ─── Code ───────────────────────────────────────────────── */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.825rem;
+  line-height: 1.55;
+  background: var(--surface);
+  color: var(--text);
+  padding: var(--sp-6);
+  overflow-x: auto;
+  margin: var(--sp-6) 0;
+  max-width: 100%;
+  tab-size: 2;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ─── Lists ──────────────────────────────────────────────── */
+ul, ol {
+  margin: var(--sp-3) 0 var(--sp-4) var(--sp-6);
+  max-width: 64ch;
+}
+
+li { margin-bottom: var(--sp-2); }
+li:last-child { margin-bottom: 0; }
+
+/* ─── Tables ─────────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin: var(--sp-6) 0; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th {
+  text-align: left;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding: var(--sp-2) var(--sp-4) var(--sp-2) 0;
+  border-bottom: 2px solid var(--border-mid);
+}
+
+td {
+  padding: var(--sp-3) var(--sp-4) var(--sp-3) 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+td code { font-size: 0.78em; }
+
+tr:last-child td { border-bottom: none; }
+
+/* ─── Diagram ────────────────────────────────────────────── */
+.diagram {
+  margin: var(--sp-6) 0;
+  overflow-x: auto;
+}
+
+.diagram pre {
+  background: var(--surface-2);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+/* ─── Trap cards (no box-shadow, no side stripe) ─────────── */
+.trap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--sp-4);
+  margin: var(--sp-6) 0;
+}
+
+.trap {
+  padding: var(--sp-6);
+  background: var(--surface);
+  outline: 1px solid var(--border);
+}
+
+.trap-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--sp-3);
+}
+
+.trap p { font-size: 0.9rem; max-width: none; }
+
+/* ─── Layer blocks ───────────────────────────────────────── */
+.layer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--sp-4) var(--sp-6);
+  align-items: start;
+  padding: var(--sp-6) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.layer:last-child { border-bottom: none; }
+
+.layer-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--border-mid);
+  user-select: none;
+  min-width: 2.5rem;
+  text-align: right;
+}
+
+.layer-body {}
+
+.layer-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: var(--sp-2);
+}
+
+.layer-body p { font-size: 0.9rem; margin-bottom: var(--sp-2); max-width: none; }
+.layer-body code { font-size: 0.76em; }
+
+/* ─── Divider ────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: var(--sp-8) 0;
+}
+
+/* ─── Footer note ────────────────────────────────────────── */
+.note {
+  font-size: 0.8rem;
+  color: var(--text-3);
+  font-style: italic;
+  margin-top: var(--sp-12);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--border);
+  max-width: 60ch;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar {
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: var(--sp-6) var(--sp-6);
+  }
+  .nav-list { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+  .nav-list li + li { margin-top: 0; }
+  .content { padding: var(--sp-8) var(--sp-6); }
+  .trap-grid { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: auto 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-title">
+    <span class="en">Glossary — Cristian Achiardi</span>
+    <span class="es">Glosario — Cristian Achiardi</span>
+    <span>
+      <span class="en">Agentic Design Systems</span>
+      <span class="es">Sistemas de Diseño Agénticos</span>
+    </span>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
+  </div>
+</header>
+
+<!-- ═══ LAYOUT ════════════════════════════════════════════════ -->
+<div class="layout">
+
+  <!-- ─── SIDEBAR ──────────────────────────────────────────── -->
+  <nav class="sidebar" aria-label="Sections">
+    <p class="sidebar-label">
+      <span class="en">Sections</span>
+      <span class="es">Secciones</span>
+    </p>
+    <ul class="nav-list">
+      <li><a href="#intro"><span class="en">Introduction</span><span class="es">Introducción</span></a></li>
+      <li><a href="#arc"><span class="en">Core arc</span><span class="es">Arco central</span></a></li>
+      <li><a href="#governance"><span class="en">Governance</span><span class="es">Gobernanza</span></a></li>
+      <li><a href="#components"><span class="en">Component vocabulary</span><span class="es">Vocabulario de componentes</span></a></li>
+      <li><a href="#tokens"><span class="en">Tokens & pipeline</span><span class="es">Tokens y pipeline</span></a></li>
+      <li><a href="#repo"><span class="en">Repo shape</span><span class="es">Estructura del repo</span></a></li>
+      <li><a href="#gates"><span class="en">Gates & CI</span><span class="es">Gates y CI</span></a></li>
+      <li><a href="#tools"><span class="en">Tools</span><span class="es">Herramientas</span></a></li>
+      <li><a href="#commands"><span class="en">Commands</span><span class="es">Comandos</span></a></li>
+      <li><a href="#jargon"><span class="en">Cristian's jargon</span><span class="es">Jerga de Cristian</span></a></li>
+      <li><a href="#formats"><span class="en">File formats</span><span class="es">Formatos de archivo</span></a></li>
+      <li><a href="#pnpm">pnpm</a></li>
+      <li><a href="#connection"><span class="en">How they connect</span><span class="es">Cómo conectan</span></a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── CONTENT ──────────────────────────────────────────── -->
+  <main class="content">
+
+    <!-- ══ 0. INTRO ══════════════════════════════════════════ -->
+    <section class="section" id="intro">
+
+      <h1 class="section-title en">Introduction — the whole ecosystem</h1>
+      <h1 class="section-title es">Introducción — el ecosistema completo</h1>
+
+      <h2 class="section-subtitle en">The problem this system solves</h2>
+      <h2 class="section-subtitle es">El problema que resuelve este sistema</h2>
+
+      <div class="en">
+        <p>Most design systems get built backwards: someone draws a Button, someone else codes it, and then everyone argues about what it should have been. The result is a library full of components that work but disagree — different prop names for the same idea, different token names for the same colour, no record of why anything is the way it is.</p>
+        <p>Cristian's system runs the other way. <strong>Nothing gets built until a decision exists. Nothing gets decided until evidence exists.</strong> The sequence is strict:</p>
+      </div>
+      <div class="es">
+        <p>La mayoría de los sistemas de diseño se construyen al revés: alguien dibuja un Button, otra persona lo codifica, y luego todos discuten sobre cómo debería haber sido. El resultado es una librería llena de componentes que funcionan pero no se hablan entre sí — diferentes nombres de props para la misma idea, diferentes nombres de tokens para el mismo color, sin registro de por qué las cosas son como son.</p>
+        <p>El sistema de Cristian va en sentido contrario. <strong>Nada se construye hasta que existe una decisión. Nada se decide hasta que existe evidencia.</strong> La secuencia es estricta:</p>
+      </div>
+
+      <blockquote>
+        <span class="en">Explore → Report → Decide → Build</span>
+        <span class="es">Explorar → Reportar → Decidir → Construir</span>
+      </blockquote>
+
+      <div class="en">
+        <p>This is not a philosophy. It is enforced by the tools: the build fails if a contract contradicts the code, CI fails if the prop glossary drifts, and the ADR index fails if a decision isn't recorded. You cannot skip steps and have a green build.</p>
+      </div>
+      <div class="es">
+        <p>Esto no es una filosofía. Está forzado por las herramientas: el build falla si un contrato contradice el código, CI falla si el glosario de props se desvía, y el índice de ADR falla si una decisión no está registrada. No puedes saltarte pasos y tener un build verde.</p>
+      </div>
+
+      <h2 class="section-subtitle en">The five layers</h2>
+      <h2 class="section-subtitle es">Las cinco capas</h2>
+
+      <div class="layer">
+        <div class="layer-num">1</div>
+        <div class="layer-body">
+          <p class="layer-name en">Brand &amp; Tokens</p>
+          <p class="layer-name es">Marca y Tokens</p>
+          <div class="en"><p>Brand decisions → Primitives → Semantic roles → Component slots. Files: <code>tokens/*.json</code> → Style Dictionary → <code>build/*.css</code> + <code>*.ts</code>. CSS custom properties flow downstream.</p></div>
+          <div class="es"><p>Decisiones de marca → Primitivos → Roles semánticos → Slots de componente. Archivos: <code>tokens/*.json</code> → Style Dictionary → <code>build/*.css</code> + <code>*.ts</code>. Las propiedades CSS custom fluyen aguas abajo.</p></div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="layer-num">2</div>
+        <div class="layer-body">
+          <p class="layer-name en">Contracts — the product</p>
+          <p class="layer-name es">Contratos — el producto</p>
+          <div class="en"><p>One JSON file per component. Framework-agnostic. Declares: purpose, behaviour, anatomy, states, axes, a11y commitments, token policy per part. File: <code>contracts/components/&lt;Name&gt;/&lt;Name&gt;.contract.json</code>.</p></div>
+          <div class="es"><p>Un archivo JSON por componente. Agnóstico de framework. Declara: propósito, comportamiento, anatomía, estados, ejes, compromisos de accesibilidad, política de tokens por parte. Archivo: <code>contracts/components/&lt;Nombre&gt;/&lt;Nombre&gt;.contract.json</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="layer-num">3</div>
+        <div class="layer-body">
+          <p class="layer-name en">Inherited conventions &amp; namespace</p>
+          <p class="layer-name es">Convenciones heredadas y namespace</p>
+          <div class="en"><p>The shared vocabulary every component must speak. Props Map validates that no component coins a synonym. Files: <code>contracts/prop-canon.json</code> (hand-maintained canon), <code>.ai/maps/prop-map.md</code> (measured reality, generated).</p></div>
+          <div class="es"><p>El vocabulario compartido que todo componente debe hablar. El Props Map valida que ningún componente acuñe un sinónimo. Archivos: <code>contracts/prop-canon.json</code> (canon manual), <code>.ai/maps/prop-map.md</code> (realidad medida, generado).</p></div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="layer-num">4</div>
+        <div class="layer-body">
+          <p class="layer-name en">Component — logic + styles</p>
+          <p class="layer-name es">Componente — lógica + estilos</p>
+          <div class="en"><p>The contract builds two things in parallel: <strong>Logic</strong> (<code>.tsx</code> — CVA variant axes, state tracking) and <strong>Styles</strong> (<code>.module.css</code> — token variables applied). Together they generate the Component API. React binding: <code>react/bindings/&lt;Name&gt;.react.json</code>.</p></div>
+          <div class="es"><p>El contrato construye dos cosas en paralelo: <strong>Lógica</strong> (<code>.tsx</code> — ejes de variantes CVA, seguimiento de estado) y <strong>Estilos</strong> (<code>.module.css</code> — variables de tokens aplicadas). Juntas generan la API del componente. Binding React: <code>react/bindings/&lt;Nombre&gt;.react.json</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="layer-num">5</div>
+        <div class="layer-body">
+          <p class="layer-name en">Artifacts</p>
+          <p class="layer-name es">Artefactos</p>
+          <div class="en"><p>Three outputs — all generated <em>from</em> the contract, never authored by hand: coded component (<code>packages/react/dist/</code>), Figma component (wired via <code>.figma/</code> manifest), component docs (Storybook or custom).</p></div>
+          <div class="es"><p>Tres salidas — todas generadas <em>desde</em> el contrato, nunca escritas a mano: componente codificado (<code>packages/react/dist/</code>), componente Figma (conectado vía <code>.figma/</code>), documentación del componente (Storybook o custom).</p></div>
+        </div>
+      </div>
+
+      <div class="en">
+        <p style="margin-top: var(--sp-8)"><strong>Design decisions loop back.</strong> When a decision changes, it modifies the contract → contract modifies logic + styles → artifacts regenerate. Nothing skips the chain.</p>
+      </div>
+      <div class="es">
+        <p style="margin-top: var(--sp-8)"><strong>Las decisiones de diseño forman un bucle.</strong> Cuando una decisión cambia, modifica el contrato → el contrato modifica lógica + estilos → los artefactos se regeneran. Nada se salta la cadena.</p>
+      </div>
+
+      <h2 class="section-subtitle en">The AI layer</h2>
+      <h2 class="section-subtitle es">La capa de IA</h2>
+
+      <div class="en">
+        <p class="term">MCP — Model Context Protocol</p>
+        <p>The protocol that lets an AI agent call external tools. The main connection here is Figma — the agent reads the design file, inspects variables, gets component structure, without a human copy-pasting screenshots.</p>
+        <p class="term">Agent</p>
+        <p>A model (Claude) that uses MCP tools to take actions: read the Figma file, write a research doc, propose a contract, run the verify gate. The agent does not make decisions — it surfaces evidence and executes recorded decisions.</p>
+        <p class="term">Skill (procedure)</p>
+        <p>A reusable prompt + instruction set. This repo ships five skills in <code>.claude/skills/</code>: <code>ds-decide</code>, <code>ds-component</code> (retired), <code>ds-figma-explain</code>, <code>ds-figma-document</code>, <code>ds-figma-component</code>.</p>
+        <p class="term">Context window &amp; progressive disclosure</p>
+        <p>The agent has limited working memory. The system is designed so nothing is loaded up front — only the doc governing the surface being touched. Every README is small. Every ADR is narrow. Load on demand.</p>
+      </div>
+      <div class="es">
+        <p class="term">MCP — Model Context Protocol</p>
+        <p>El protocolo que permite a un agente de IA llamar herramientas externas. La conexión principal aquí es Figma — el agente lee el archivo de diseño, inspecciona variables, obtiene la estructura de componentes, sin que un humano copie y pegue capturas de pantalla.</p>
+        <p class="term">Agente</p>
+        <p>Un modelo (Claude) que usa herramientas MCP para tomar acciones: leer el archivo de Figma, escribir un doc de investigación, proponer un contrato, ejecutar el gate de verificación. El agente no toma decisiones — saca evidencia a la superficie y ejecuta decisiones registradas.</p>
+        <p class="term">Skill (procedimiento)</p>
+        <p>Un conjunto reutilizable de prompt + instrucciones. Este repo incluye cinco skills en <code>.claude/skills/</code>: <code>ds-decide</code>, <code>ds-component</code> (retirado), <code>ds-figma-explain</code>, <code>ds-figma-document</code>, <code>ds-figma-component</code>.</p>
+        <p class="term">Ventana de contexto y divulgación progresiva</p>
+        <p>El agente tiene memoria de trabajo limitada. El sistema está diseñado para que nada se cargue de antemano — solo el doc que governa la superficie que se está tocando. Cada README es pequeño. Cada ADR es estrecho. Carga bajo demanda.</p>
+      </div>
+
+      <h2 class="section-subtitle en">The five traps</h2>
+      <h2 class="section-subtitle es">Las cinco trampas</h2>
+
+      <div class="trap-grid">
+        <div class="trap">
+          <p class="trap-name"><span class="en">Drift</span><span class="es">Deriva</span></p>
+          <div class="en"><p>When source of truth and code disagree. A Figma component says one thing; the coded component does another. Gates <code>verify:contract</code> and <code>prop-map:check</code> exist to detect this automatically.</p></div>
+          <div class="es"><p>Cuando la fuente de verdad y el código no coinciden. Un componente de Figma dice una cosa; el codificado hace otra. Los gates <code>verify:contract</code> y <code>prop-map:check</code> existen para detectarlo automáticamente.</p></div>
+        </div>
+        <div class="trap">
+          <p class="trap-name"><span class="en">Single source of truth</span><span class="es">Fuente de verdad única</span></p>
+          <div class="en"><p>Every fact lives in exactly one place. Tokens in <code>tokens/</code>, prop names in <code>prop-canon.json</code>, component spec in the contract. Two copies guarantees eventual disagreement.</p></div>
+          <div class="es"><p>Cada hecho vive en exactamente un lugar. Tokens en <code>tokens/</code>, nombres de props en <code>prop-canon.json</code>, especificación en el contrato. Dos copias garantizan desacuerdo eventual.</p></div>
+        </div>
+        <div class="trap">
+          <p class="trap-name"><span class="en">Variant is not a prop</span><span class="es">La variante no es un prop</span></p>
+          <div class="en"><p>A visual variant (<code>size</code>, <code>hierarchy</code>) is an axis. A state (<code>disabled</code>, <code>loading</code>) is a state. Mixing them produces broken accessibility trees — the platform already owns <code>disabled</code>.</p></div>
+          <div class="es"><p>Una variante visual (<code>size</code>, <code>hierarchy</code>) es un eje. Un estado (<code>disabled</code>, <code>loading</code>) es un estado. Mezclarlos produce árboles de accesibilidad rotos — la plataforma ya posee <code>disabled</code>.</p></div>
+        </div>
+        <div class="trap">
+          <p class="trap-name"><span class="en">Measure, don't eyeball</span><span class="es">Mide, no calcules a ojo</span></p>
+          <div class="en"><p>A research doc records numbers, not adjectives. "41 variables across 3 collections" is evidence. "Quite a lot of variables" is noise. Adjective-based decisions cannot be re-evaluated.</p></div>
+          <div class="es"><p>Un doc de investigación registra números, no adjetivos. "41 variables en 3 colecciones" es evidencia. "Bastantes variables" es ruido. Las decisiones basadas en adjetivos no pueden re-evaluarse.</p></div>
+        </div>
+        <div class="trap">
+          <p class="trap-name"><span class="en">Generated / validated / reviewed</span><span class="es">Generado / validado / revisado</span></p>
+          <div class="en"><p><strong>Generated</strong> — consistent with its inputs; inputs may be wrong. <strong>Validated</strong> — legal against a schema; legal ≠ true. <strong>Reviewed</strong> — a person verified it describes reality. Only reviewed catches a plausible-but-wrong claim. That part is always on you.</p></div>
+          <div class="es"><p><strong>Generado</strong> — consistente con sus entradas; las entradas pueden estar mal. <strong>Validado</strong> — legal contra un esquema; legal ≠ verdadero. <strong>Revisado</strong> — una persona verificó que describe la realidad. Solo revisado atrapa una afirmación plausible pero incorrecta. Esa parte siempre es tuya.</p></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ══ 1. CORE ARC ════════════════════════════════════════ -->
+    <section class="section" id="arc">
+      <h2 class="section-title en">Core arc</h2>
+      <h2 class="section-title es">Arco central</h2>
+
+      <p class="term en">Explore → Report → Decide → Build</p>
+      <p class="term es">Explorar → Reportar → Decidir → Construir</p>
+      <div class="en"><p>The four steps Cristian teaches. You do not draw a Button first. You read the design source, write down what is measurably there (a <em>report</em>), turn open questions into recorded <em>decisions</em> (ADRs), then build the component against a decision that already exists.</p></div>
+      <div class="es"><p>Los cuatro pasos que enseña Cristian. No dibujas un Button primero. Lees la fuente de diseño, escribes lo que está mediblemente ahí (un <em>reporte</em>), conviertes las preguntas abiertas en <em>decisiones</em> registradas (ADRs), luego construyes el componente contra una decisión que ya existe.</p></div>
+
+      <p class="term en">Design source</p>
+      <p class="term es">Fuente de diseño</p>
+      <div class="en"><p>The Figma file we read from. In our case: the "Kraken DS" file. It is a <strong>canvas to read</strong>, not a pipeline stage — nothing in Figma is auto-swept into code.</p></div>
+      <div class="es"><p>El archivo de Figma del que leemos. En nuestro caso: el archivo "Kraken DS". Es un <strong>lienzo para leer</strong>, no una etapa de pipeline — nada en Figma se barre automáticamente hacia el código.</p></div>
+    </section>
+
+    <!-- ══ 2. GOVERNANCE ══════════════════════════════════════ -->
+    <section class="section" id="governance">
+      <h2 class="section-title en">Governance</h2>
+      <h2 class="section-title es">Gobernanza</h2>
+
+      <p class="term">ADR — <span class="en">Architectural Decision Record</span><span class="es">Registro de Decisión Arquitectónica</span></p>
+      <div class="en"><p>A short markdown file that records a decision, why it was made, and alternatives considered. Lives in <code>docs/ADR/</code>. Once accepted, other work must respect it or update it — silently ignoring one is a defect.</p></div>
+      <div class="es"><p>Un archivo markdown corto que registra una decisión, por qué se tomó, y las alternativas consideradas. Vive en <code>docs/ADR/</code>. Una vez aceptado, otro trabajo debe respetarlo o actualizarlo — ignorarlo silenciosamente es un defecto.</p></div>
+
+      <p class="term en">Decision vs contract</p>
+      <p class="term es">Decisión vs contrato</p>
+      <div class="en"><p>An ADR is the <em>decision</em> (agnostic, high-level). A <strong>contract</strong> is its mechanical realisation (schemas, JSON files, scripts) that lives next to the code. The ADR <em>links</em> its contracts. This lets a decision stay stable while its implementation moves.</p></div>
+      <div class="es"><p>Un ADR es la <em>decisión</em> (agnóstica, de alto nivel). Un <strong>contrato</strong> es su realización mecánica (esquemas, archivos JSON, scripts) que vive junto al código. El ADR <em>enlaza</em> sus contratos. Esto permite que una decisión se mantenga estable mientras su implementación se mueve.</p></div>
+
+      <p class="term en">Draft vs Accepted</p>
+      <p class="term es">Draft vs Accepted (estado del ADR)</p>
+      <div class="en"><p>Pre-v0, most ADRs stay Draft. An ADR only becomes Accepted once <strong>the code that realises it exists</strong>. After v0, supersede old ADRs instead of editing them.</p></div>
+      <div class="es"><p>Pre-v0, la mayoría de los ADRs se mantienen en Draft. Un ADR solo se convierte en Accepted una vez que <strong>el código que lo realiza existe</strong>. Después de v0, se superseden los ADRs viejos en lugar de editarlos.</p></div>
+    </section>
+
+    <!-- ══ 3. COMPONENT VOCABULARY ════════════════════════════ -->
+    <section class="section" id="components">
+      <h2 class="section-title en">Component vocabulary</h2>
+      <h2 class="section-title es">Vocabulario de componentes</h2>
+
+      <p class="term en">Contract (component contract)</p>
+      <p class="term es">Contrato (contrato de componente)</p>
+      <div class="en"><p>A <code>&lt;Name&gt;.contract.json</code> file for each component. States what source code cannot state: which HTML element renders, where the ref lands, what a slot accepts, accessibility commitments, and <strong>which family of token is allowed to paint which channel of which node</strong>.</p></div>
+      <div class="es"><p>Un archivo <code>&lt;Nombre&gt;.contract.json</code> para cada componente. Declara lo que el código fuente no puede declarar: qué elemento HTML renderiza, dónde aterriza la ref, qué acepta un slot, compromisos de accesibilidad, y <strong>qué familia de token puede pintar qué canal de qué nodo</strong>.</p></div>
+
+      <p class="term en">Prop glossary</p>
+      <p class="term es">Glosario de props</p>
+      <div class="en"><p>Generated file (<code>.ai/maps/prop-map.md</code>) listing every prop used across the system, its type, and where it appears. Descriptive, not prescriptive. Hand-editing it fails CI.</p></div>
+      <div class="es"><p>Archivo generado (<code>.ai/maps/prop-map.md</code>) que lista cada prop usado en todo el sistema, su tipo, y dónde aparece. Descriptivo, no prescriptivo. Editarlo a mano falla CI.</p></div>
+
+      <p class="term">Slot</p>
+      <div class="en"><p>A place inside a component where the user (of the component) passes content — typically <code>children</code>, or a named slot like <code>leadingIcon</code>.</p></div>
+      <div class="es"><p>Un lugar dentro de un componente donde el usuario (del componente) pasa contenido — típicamente <code>children</code>, o un slot nombrado como <code>leadingIcon</code>.</p></div>
+
+      <p class="term en">Part</p>
+      <p class="term es">Parte</p>
+      <div class="en"><p>A named piece of a component that renders. Contracts name the parts so gates can check nothing is claimed that does not actually render.</p></div>
+      <div class="es"><p>Una pieza nombrada de un componente que renderiza. Los contratos nombran las partes para que los gates puedan verificar que nada se afirma que no renderiza realmente.</p></div>
+
+      <p class="term en">Axis / variant</p>
+      <p class="term es">Eje / variante</p>
+      <div class="en"><p>An axis is a dimension of variation (<code>size</code>, <code>tone</code>, <code>intent</code>). Its values are the variants (<code>sm | md | lg</code>). Contracts declare the axes; the source must implement exactly those values.</p></div>
+      <div class="es"><p>Un eje es una dimensión de variación (<code>size</code>, <code>tone</code>, <code>intent</code>). Sus valores son las variantes (<code>sm | md | lg</code>). Los contratos declaran los ejes; el código fuente debe implementar exactamente esos valores.</p></div>
+
+      <p class="term">CVA — Class Variance Authority</p>
+      <div class="en"><p>A tiny library used to bind variant names to CSS classes in a type-safe way. This library uses CVA + CSS Modules.</p></div>
+      <div class="es"><p>Una pequeña librería usada para vincular nombres de variantes a clases CSS de manera type-safe. Esta librería usa CVA + CSS Modules.</p></div>
+
+      <p class="term">CSS Modules</p>
+      <div class="en"><p>CSS files scoped to a component. Class names get hashed at build time so they cannot collide with other components' classes.</p></div>
+      <div class="es"><p>Archivos CSS con alcance a un componente. Los nombres de clase se hashean en tiempo de build para que no puedan colisionar con las clases de otros componentes.</p></div>
+    </section>
+
+    <!-- ══ 4. TOKENS ══════════════════════════════════════════ -->
+    <section class="section" id="tokens">
+      <h2 class="section-title en">Tokens &amp; the pipeline</h2>
+      <h2 class="section-title es">Tokens y el pipeline</h2>
+
+      <p class="term">Token</p>
+      <div class="en"><p>A named design value: a colour, a spacing step, a font size. Not a raw hex — a <em>reference</em> to a value that has a meaning. <code>--kraken-color-bg-primary</code> is a token; <code>#0f172a</code> is a value.</p></div>
+      <div class="es"><p>Un valor de diseño nombrado: un color, un paso de espaciado, un tamaño de fuente. No un hex crudo — una <em>referencia</em> a un valor que tiene un significado. <code>--kraken-color-bg-primary</code> es un token; <code>#0f172a</code> es un valor.</p></div>
+
+      <p class="term en">Primitive vs semantic token</p>
+      <p class="term es">Primitivo vs token semántico</p>
+      <div class="en">
+        <p>Primitive: raw palette (<code>color-neutral-900</code>). Semantic: what it means in context (<code>color-bg-primary</code>). Semantic tokens reference primitives. Components consume semantic tokens.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tier</th><th>Example</th><th>References</th></tr></thead>
+            <tbody>
+              <tr><td>Primitive</td><td><code>--ds-color-indigo-500: #5146e6</code></td><td>nothing — it is a literal</td></tr>
+              <tr><td>Semantic role</td><td><code>--ds-color-brand-primary</code> → <code>var(--ds-color-indigo-500)</code></td><td>primitives only</td></tr>
+              <tr><td>Component slot</td><td><code>--ds-color-fill-loud</code> → <code>var(--ds-color-brand-primary)</code></td><td>semantic roles only</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Components style against <strong>semantic roles only</strong> — never against branded families. This is what makes every variant "free": changing what <code>--ds-color-fill-loud</code> points to re-themes every component that uses it.</p>
+      </div>
+      <div class="es">
+        <p>Primitivo: paleta cruda (<code>color-neutral-900</code>). Semántico: lo que significa en contexto (<code>color-bg-primary</code>). Los tokens semánticos referencian primitivos. Los componentes consumen tokens semánticos.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nivel</th><th>Ejemplo</th><th>Referencias</th></tr></thead>
+            <tbody>
+              <tr><td>Primitivo</td><td><code>--ds-color-indigo-500: #5146e6</code></td><td>nada — es un literal</td></tr>
+              <tr><td>Rol semántico</td><td><code>--ds-color-brand-primary</code> → <code>var(--ds-color-indigo-500)</code></td><td>solo primitivos</td></tr>
+              <tr><td>Slot de componente</td><td><code>--ds-color-fill-loud</code> → <code>var(--ds-color-brand-primary)</code></td><td>solo roles semánticos</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Los componentes se estilizan contra <strong>roles semánticos únicamente</strong> — nunca contra familias de marca. Esto es lo que hace que cada variante sea "gratis": cambiar a qué apunta <code>--ds-color-fill-loud</code> re-temea cada componente que lo usa.</p>
+      </div>
+
+      <p class="term">DTCG — Design Tokens Community Group</p>
+      <div class="en"><p>The spec for the JSON format tokens are written in. <code>{"$type": "color", "$value": "#0f172a"}</code> is DTCG. The industry-standard shape.</p></div>
+      <div class="es"><p>La especificación para el formato JSON en que se escriben los tokens. <code>{"$type": "color", "$value": "#0f172a"}</code> es DTCG. La forma estándar de la industria.</p></div>
+
+      <p class="term">Style Dictionary</p>
+      <div class="en"><p>The tool that reads DTCG JSON and writes it out as CSS custom properties, TS constants, or any other target. The <em>pipeline</em> between token JSON and what a component consumes.</p></div>
+      <div class="es"><p>La herramienta que lee JSON DTCG y lo escribe como propiedades CSS custom, constantes TS, u otro objetivo. El <em>pipeline</em> entre el JSON de tokens y lo que un componente consume.</p></div>
+
+      <p class="term en">CSS custom property</p>
+      <p class="term es">Propiedad CSS custom</p>
+      <div class="en"><p><code>--kraken-color-bg-primary: #0f172a;</code>. Native browser feature. Tokens compile to these; components use <code>var(--kraken-color-bg-primary)</code>.</p></div>
+      <div class="es"><p><code>--kraken-color-bg-primary: #0f172a;</code>. Característica nativa del navegador. Los tokens compilan a estas; los componentes usan <code>var(--kraken-color-bg-primary)</code>.</p></div>
+
+      <p class="term">Upstream / downstream</p>
+      <div class="en"><p>Upstream = what your DS depends on (NativeWind, Phosphor icons). Downstream = what depends on your DS (consumer apps). The DS lives in the middle: extends upstream, feeds downstream.</p></div>
+      <div class="es"><p>Upstream = de lo que depende tu DS (NativeWind, íconos Phosphor). Downstream = lo que depende de tu DS (apps consumidoras). El DS vive en el medio: extiende el upstream, alimenta el downstream.</p></div>
+    </section>
+
+    <!-- ══ 5. REPO SHAPE ══════════════════════════════════════ -->
+    <section class="section" id="repo">
+      <h2 class="section-title en">Repo shape</h2>
+      <h2 class="section-title es">Estructura del repositorio</h2>
+
+      <p class="term">Monorepo</p>
+      <div class="en"><p>One repository holding many packages. Ours holds <code>@kraken/tokens</code>, <code>@kraken/react</code>, <code>@kraken/contracts</code>, plus <code>apps/sandbox</code> and <code>apps/storybook</code>.</p></div>
+      <div class="es"><p>Un repositorio que contiene muchos paquetes. El nuestro contiene <code>@kraken/tokens</code>, <code>@kraken/react</code>, <code>@kraken/contracts</code>, más <code>apps/sandbox</code> y <code>apps/storybook</code>.</p></div>
+
+      <p class="term">pnpm workspace</p>
+      <div class="en"><p>The mechanism that lets packages inside a monorepo reference each other by name without publishing anywhere.</p></div>
+      <div class="es"><p>El mecanismo que permite a los paquetes dentro de un monorepo referenciarse entre sí por nombre sin publicar en ningún lado.</p></div>
+
+      <p class="term en">Scope (npm scope)</p>
+      <p class="term es">Scope (alcance npm)</p>
+      <div class="en"><p>The <code>@kraken</code> in <code>@kraken/react</code>. Namespaces the package. Set once by <code>pnpm init-ds kraken</code> — cannot be safely renamed by hand later.</p></div>
+      <div class="es"><p>El <code>@kraken</code> en <code>@kraken/react</code>. Da namespace al paquete. Se establece una vez con <code>pnpm init-ds kraken</code> — no se puede renombrar de forma segura a mano después.</p></div>
+
+      <p class="term">Sandbox</p>
+      <div class="en"><p><code>apps/sandbox</code> — a fast Vite page that boots in ~1s, pointed directly at component source. For rapid, single-component work.</p></div>
+      <div class="es"><p><code>apps/sandbox</code> — una página Vite rápida que arranca en ~1s, apuntando directamente al código fuente del componente. Para trabajo rápido, componente a componente.</p></div>
+
+      <p class="term">Storybook</p>
+      <div class="en"><p><code>apps/storybook</code> — the classic component gallery. Present on disk but <strong>deliberately not installed</strong> by default. One line to switch on.</p></div>
+      <div class="es"><p><code>apps/storybook</code> — la galería clásica de componentes. Presente en disco pero <strong>deliberadamente no instalada</strong> por defecto. Una línea para activarla.</p></div>
+    </section>
+
+    <!-- ══ 6. GATES & CI ══════════════════════════════════════ -->
+    <section class="section" id="gates">
+      <h2 class="section-title en">Gates &amp; CI</h2>
+      <h2 class="section-title es">Gates y CI</h2>
+
+      <p class="term en">Gate</p>
+      <p class="term es">Gate (compuerta)</p>
+      <div class="en"><p>An automated check that fails the build if broken. <code>pnpm verify</code> runs every gate locally; CI runs them again. A gate that only runs locally is not a gate.</p></div>
+      <div class="es"><p>Una verificación automatizada que falla el build si se rompe. <code>pnpm verify</code> ejecuta cada gate localmente; CI los ejecuta de nuevo. Un gate que solo corre localmente no es un gate.</p></div>
+
+      <p class="term en">Report (vs gate)</p>
+      <p class="term es">Reporte (vs gate)</p>
+      <div class="en"><p>A check that <em>reports</em> findings without failing. Uncontracted components and paint findings are reports, not gates — because a gate that fails on everything day one gets switched off, and a switched-off gate protects nothing.</p></div>
+      <div class="es"><p>Una verificación que <em>reporta</em> hallazgos sin fallar. Los componentes sin contrato y los hallazgos de paint son reportes, no gates — porque un gate que falla en todo el día uno se apaga, y un gate apagado no protege nada.</p></div>
+
+      <div class="table-wrap" style="margin-top: var(--sp-6)">
+        <table>
+          <thead>
+            <tr>
+              <th><span class="en">Check</span><span class="es">Verificación</span></th>
+              <th><span class="en">Gate or report</span><span class="es">Gate o reporte</span></th>
+              <th><span class="en">Catches</span><span class="es">Detecta</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>verify:contract</code></td><td><span class="en">Gate</span><span class="es">Gate</span></td><td><span class="en">contract that is illegal, invented, or contradicts the source</span><span class="es">contrato ilegal, inventado, o que contradice el código</span></td></tr>
+            <tr><td><code>prop-map:check</code></td><td><span class="en">Gate</span><span class="es">Gate</span></td><td><span class="en">stale glossary or dead disposition</span><span class="es">glosario desactualizado o disposición muerta</span></td></tr>
+            <tr><td><span class="en">typecheck, build</span><span class="es">typecheck, build</span></td><td><span class="en">Gate</span><span class="es">Gate</span></td><td><span class="en">ordinary type and build errors</span><span class="es">errores ordinarios de tipo y build</span></td></tr>
+            <tr><td><code>report:paints</code></td><td><span class="en">Report</span><span class="es">Reporte</span></td><td><span class="en">token policy violations</span><span class="es">violaciones de política de tokens</span></td></tr>
+            <tr><td><span class="en">Contract coverage</span><span class="es">Cobertura de contratos</span></td><td><span class="en">Report</span><span class="es">Reporte</span></td><td><span class="en">uncontracted components</span><span class="es">componentes sin contrato</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="term">CI — <span class="en">Continuous Integration</span><span class="es">Integración Continua</span></p>
+      <div class="en"><p>The remote pipeline (GitHub Actions) that runs the gates on every push. If CI is green, the change is safe to land.</p></div>
+      <div class="es"><p>El pipeline remoto (GitHub Actions) que ejecuta los gates en cada push. Si CI está verde, el cambio es seguro para aterrizar.</p></div>
+    </section>
+
+    <!-- ══ 7. TOOLS ═══════════════════════════════════════════ -->
+    <section class="section" id="tools">
+      <h2 class="section-title en">Tools around the repo</h2>
+      <h2 class="section-title es">Herramientas del repositorio</h2>
+
+      <p class="term">Figma Console MCP</p>
+      <div class="en"><p>An MCP server that gives Claude access to Figma's REST API — read libraries, comments, variables, beyond what the raw Plugin API can do.</p></div>
+      <div class="es"><p>Un servidor MCP que da a Claude acceso a la API REST de Figma — leer librerías, comentarios, variables, más allá de lo que puede hacer la API del Plugin crudo.</p></div>
+
+      <p class="term">Figma Desktop Bridge</p>
+      <div class="en"><p>A companion plugin that lets Claude talk to the Figma <strong>desktop app</strong> live — select nodes, get screenshots, run scripts inside the file.</p></div>
+      <div class="es"><p>Un plugin compañero que permite a Claude hablar con la <strong>app de escritorio</strong> de Figma en vivo — seleccionar nodos, obtener capturas, ejecutar scripts dentro del archivo.</p></div>
+
+      <p class="term en">Personal Access Token (PAT)</p>
+      <p class="term es">Token de Acceso Personal (PAT)</p>
+      <div class="en"><p>A per-user key generated in Figma settings that authenticates the MCP server against Figma's REST API on your behalf.</p></div>
+      <div class="es"><p>Una clave por usuario generada en la configuración de Figma que autentica el servidor MCP contra la API REST de Figma en tu nombre.</p></div>
+    </section>
+
+    <!-- ══ 8. COMMANDS ════════════════════════════════════════ -->
+    <section class="section" id="commands">
+      <h2 class="section-title en">Commands</h2>
+      <h2 class="section-title es">Comandos</h2>
+
+      <p class="term"><code>pnpm init-ds &lt;name&gt;</code></p>
+      <div class="en"><p>One-shot brand rename. Turns <code>@ds/*</code> → <code>@name/*</code>, <code>--ds-*</code> → <code>--name-*</code>, <code>data-ds-*</code> → <code>data-name-*</code>. Run <strong>before</strong> any component is written.</p></div>
+      <div class="es"><p>Renombre de marca en un solo paso. Convierte <code>@ds/*</code> → <code>@name/*</code>, <code>--ds-*</code> → <code>--name-*</code>, <code>data-ds-*</code> → <code>data-name-*</code>. Ejecutar <strong>antes</strong> de que exista cualquier componente.</p></div>
+
+      <p class="term"><code>pnpm verify</code></p>
+      <div class="en"><p>Full local gate chain: format → typecheck → contract → prop-map → adr-index → docs → figma → build → test.</p></div>
+      <div class="es"><p>Cadena completa de gates locales: format → typecheck → contract → prop-map → adr-index → docs → figma → build → test.</p></div>
+
+      <p class="term"><code>pnpm dev</code></p>
+      <div class="en"><p>Boots the sandbox at <code>localhost:4300</code>.</p></div>
+      <div class="es"><p>Arranca el sandbox en <code>localhost:4300</code>.</p></div>
+
+      <p class="term"><code>pnpm contract &lt;Name&gt;</code></p>
+      <div class="en"><p>Merges the component source and the contract — tells you what the component <em>is</em>. No build step required.</p></div>
+      <div class="es"><p>Fusiona el código fuente del componente y el contrato — te dice lo que el componente <em>es</em>. No requiere paso de build.</p></div>
+
+      <p class="term"><code>pnpm prop-map</code></p>
+      <div class="en"><p>Regenerates the prop glossary. Run after any prop name changes.</p></div>
+      <div class="es"><p>Regenera el glosario de props. Ejecutar después de cualquier cambio en nombres de props.</p></div>
+
+      <p class="term"><code>pnpm report:paints</code></p>
+      <div class="en"><p>Token policy vs stylesheet — a report, never a gate. Shows which channels violate their declared policy.</p></div>
+      <div class="es"><p>Política de tokens vs hoja de estilos — un reporte, nunca un gate. Muestra qué canales violan su política declarada.</p></div>
+    </section>
+
+    <!-- ══ 9. JARGON ══════════════════════════════════════════ -->
+    <section class="section" id="jargon">
+      <h2 class="section-title en">Cristian's jargon</h2>
+      <h2 class="section-title es">Lo que dice Cristian que parece jerga</h2>
+
+      <p class="term en">"Contracts vs libraries"</p>
+      <p class="term es">"Contratos vs librerías"</p>
+      <div class="en"><p>The contract layer is more important than the library that implements it. Two libraries can implement the same contract; the contract is what stays stable.</p></div>
+      <div class="es"><p>La capa de contratos es más importante que la librería que la implementa. Dos librerías pueden implementar el mismo contrato; el contrato es lo que se mantiene estable.</p></div>
+
+      <p class="term en">"Derivation chain"</p>
+      <p class="term es">"Cadena de derivación"</p>
+      <div class="en"><p>The chain from brand decisions → primitive tokens → semantic tokens → component styles → app usage. Every step is downstream of a decision made one level up.</p></div>
+      <div class="es"><p>La cadena desde decisiones de marca → tokens primitivos → tokens semánticos → estilos del componente → uso en la app. Cada paso está aguas abajo de una decisión tomada un nivel arriba.</p></div>
+
+      <p class="term en">"Axes registry"</p>
+      <p class="term es">"Registro de ejes"</p>
+      <div class="en"><p>The central list of allowed axes (<code>size</code>, <code>tone</code>, <code>intent</code>) with allowed values. Prevents each component from inventing its own vocabulary.</p></div>
+      <div class="es"><p>La lista central de ejes permitidos (<code>size</code>, <code>tone</code>, <code>intent</code>) con valores permitidos. Evita que cada componente invente su propio vocabulario.</p></div>
+
+      <p class="term en">"Variant ≠ status"</p>
+      <p class="term es">"Variante ≠ estado"</p>
+      <div class="en"><p>A variant is a visual axis (a Button can be <code>size=lg</code>). A status is a runtime state (<code>disabled</code>, <code>loading</code>). They must not be mixed — they behave differently in accessibility trees.</p></div>
+      <div class="es"><p>Una variante es un eje visual (un Button puede ser <code>size=lg</code>). Un estado es una condición en tiempo de ejecución (<code>disabled</code>, <code>loading</code>). No deben mezclarse — se comportan diferente en los árboles de accesibilidad.</p></div>
+
+      <p class="term en">"Prop ownership"</p>
+      <p class="term es">"Propiedad propia del prop"</p>
+      <div class="en"><p>For any prop, exactly one place owns its definition. Copying a prop definition into another component is a defect — reuse it or contract it.</p></div>
+      <div class="es"><p>Para cualquier prop, exactamente un lugar posee su definición. Copiar una definición de prop en otro componente es un defecto — reutilízala o contrátala.</p></div>
+    </section>
+
+    <!-- ══ 10. FILE FORMATS ═══════════════════════════════════ -->
+    <section class="section" id="formats">
+      <h2 class="section-title en">File formats</h2>
+      <h2 class="section-title es">Formatos de archivo</h2>
+
+      <p class="term">.md — Markdown</p>
+      <div class="en"><p>Plain text with lightweight formatting. Not code — just writing. Every README, ADR, and GLOSSARY is Markdown. Renders as formatted docs on GitHub.</p></div>
+      <div class="es"><p>Texto plano con formato ligero. No es código — solo escritura. Cada README, ADR y GLOSARIO es Markdown. Se renderiza como docs formateados en GitHub.</p></div>
+
+      <p class="term">.json — JSON</p>
+      <div class="en"><p>Structured data: keys and values, no logic, no functions. In this repo JSON is doing heavy lifting: <code>package.json</code> (project identity), <code>ds.config.json</code> (brand), <code>*.contract.json</code> (component spec), <code>*.react.json</code> (React binding), <code>prop-canon.json</code> (canonical prop names).</p></div>
+      <div class="es"><p>Datos estructurados: claves y valores, sin lógica, sin funciones. En este repo JSON hace mucho trabajo: <code>package.json</code> (identidad del proyecto), <code>ds.config.json</code> (marca), <code>*.contract.json</code> (especificación del componente), <code>*.react.json</code> (binding React), <code>prop-canon.json</code> (nombres de props canónicos).</p></div>
+
+      <p class="term">.ts — TypeScript</p>
+      <div class="en"><p>JavaScript with types. You declare what kind of data a variable holds; the compiler catches mistakes before the code runs. Used for all library code in <code>packages/react/src/</code> and config files like <code>vite.config.ts</code>.</p></div>
+      <div class="es"><p>JavaScript con tipos. Declaras qué tipo de dato contiene una variable; el compilador captura errores antes de que el código corra. Usado para todo el código de librería en <code>packages/react/src/</code> y archivos de config como <code>vite.config.ts</code>.</p></div>
+
+      <p class="term">.tsx — TypeScript + JSX</p>
+      <div class="en"><p>TypeScript that also contains HTML-like syntax (JSX) for writing React components. Lets you write <code>&lt;Button size="m" /&gt;</code> directly in TypeScript.</p></div>
+      <div class="es"><p>TypeScript que también contiene sintaxis HTML-like (JSX) para escribir componentes React. Permite escribir <code>&lt;Button size="m" /&gt;</code> directamente en TypeScript.</p></div>
+
+      <p class="term">.mjs — ES Module JavaScript</p>
+      <div class="en"><p>Plain JavaScript using modern <code>import/export</code> syntax. All scripts in this repo are <code>.mjs</code>: <code>verify-contract.mjs</code>, <code>build-prop-map.mjs</code>, <code>init-ds.mjs</code>, etc.</p></div>
+      <div class="es"><p>JavaScript plano usando sintaxis moderna <code>import/export</code>. Todos los scripts en este repo son <code>.mjs</code>: <code>verify-contract.mjs</code>, <code>build-prop-map.mjs</code>, <code>init-ds.mjs</code>, etc.</p></div>
+
+      <p class="term">.css — CSS</p>
+      <div class="en"><p>Styling rules for HTML. Components use <code>.module.css</code> — same syntax but class names get hashed at build time so they cannot collide. A consumer targets components via <code>data-*</code> attributes, not class names.</p></div>
+      <div class="es"><p>Reglas de estilo para HTML. Los componentes usan <code>.module.css</code> — misma sintaxis pero los nombres de clase se hashean en tiempo de build para que no puedan colisionar. Un consumidor apunta a los componentes vía atributos <code>data-*</code>, no por nombres de clase.</p></div>
+
+      <p class="term">tsconfig.json</p>
+      <div class="en"><p>Tells the TypeScript compiler how to behave: which files to include, how strict to be, which JS version to target. Configuration, not code. The repo has <code>tsconfig.base.json</code> (shared rules) and per-package overrides.</p></div>
+      <div class="es"><p>Le dice al compilador de TypeScript cómo comportarse: qué archivos incluir, qué tan estricto ser, qué versión de JS apuntar. Configuración, no código. El repo tiene <code>tsconfig.base.json</code> (reglas compartidas) y sobreescrituras por paquete.</p></div>
+
+      <p class="term">vite.config.ts</p>
+      <div class="en"><p>Vite is the build tool and dev server. This config says where the entry point is, whether to build a library or an app, and which plugins to use.</p></div>
+      <div class="es"><p>Vite es la herramienta de build y servidor de desarrollo. Esta config dice dónde está el punto de entrada, si construir una librería o una app, y qué plugins usar.</p></div>
+
+      <p class="term">pnpm-workspace.yaml</p>
+      <div class="en"><p>A tiny YAML file that tells pnpm which folders are sub-packages of the monorepo. YAML is like JSON but uses indentation instead of braces.</p></div>
+      <div class="es"><p>Un pequeño archivo YAML que le dice a pnpm qué carpetas son sub-paquetes del monorepo. YAML es como JSON pero usa sangría en lugar de llaves.</p></div>
+
+      <p class="term">.prettierrc / .prettierignore</p>
+      <div class="en"><p>Prettier is a code formatter — it auto-reformats code to a consistent style. <code>.prettierrc</code> sets the rules; <code>.prettierignore</code> lists files to skip. <code>pnpm format:check</code> is the first gate in <code>pnpm verify</code>.</p></div>
+      <div class="es"><p>Prettier es un formateador de código — reformatea automáticamente el código a un estilo consistente. <code>.prettierrc</code> establece las reglas; <code>.prettierignore</code> lista los archivos a omitir. <code>pnpm format:check</code> es el primer gate en <code>pnpm verify</code>.</p></div>
+
+      <p class="term">.nvmrc</p>
+      <div class="en"><p>A one-line file with a Node.js version number (<code>20</code>). Tools like nvm read it to switch to the right Node version automatically when you enter the folder.</p></div>
+      <div class="es"><p>Un archivo de una línea con un número de versión de Node.js (<code>20</code>). Herramientas como nvm lo leen para cambiar automáticamente a la versión correcta de Node cuando entras a la carpeta.</p></div>
+
+      <p class="term">.github/workflows/verify.yml</p>
+      <div class="en"><p>YAML that defines what GitHub runs automatically on every push. In this repo it runs <code>pnpm verify</code> — the same chain you run locally. This is what makes the gates actually enforced rather than just advisory.</p></div>
+      <div class="es"><p>YAML que define qué ejecuta GitHub automáticamente en cada push. En este repo ejecuta <code>pnpm verify</code> — la misma cadena que corres localmente. Esto es lo que hace que los gates sean realmente aplicados en lugar de solo consultivos.</p></div>
+    </section>
+
+    <!-- ══ 11. PNPM ═══════════════════════════════════════════ -->
+    <section class="section" id="pnpm">
+      <h2 class="section-title">pnpm</h2>
+
+      <div class="en">
+        <p>A <strong>package manager</strong> — the tool that downloads and organizes the external code your project depends on. You list what you need in <code>package.json</code>, run <code>pnpm install</code>, and it downloads everything into <code>node_modules/</code> while locking exact versions in <code>pnpm-lock.yaml</code>.</p>
+        <p>Same job as npm or yarn, but faster and uses less disk space. More importantly for this repo: pnpm handles monorepos better — packages inside the same repo can reference each other by name without publishing anywhere. <strong>Workspace</strong> is pnpm's word for this: <code>packages/react</code> imports <code>@ds/tokens</code> and pnpm resolves it to <code>packages/tokens/</code> locally.</p>
+      </div>
+      <div class="es">
+        <p>Un <strong>gestor de paquetes</strong> — la herramienta que descarga y organiza el código externo del que depende tu proyecto. Listas lo que necesitas en <code>package.json</code>, ejecutas <code>pnpm install</code>, y descarga todo en <code>node_modules/</code> mientras bloquea versiones exactas en <code>pnpm-lock.yaml</code>.</p>
+        <p>Mismo trabajo que npm o yarn, pero más rápido y usa menos espacio en disco. Más importante para este repo: pnpm maneja mejor los monorepos — los paquetes dentro del mismo repo pueden referenciarse entre sí por nombre sin publicar en ningún lado. <strong>Workspace</strong> es la palabra de pnpm para esto: <code>packages/react</code> importa <code>@ds/tokens</code> y pnpm lo resuelve a <code>packages/tokens/</code> localmente.</p>
+      </div>
+    </section>
+
+    <!-- ══ 12. HOW THEY CONNECT ═══════════════════════════════ -->
+    <section class="section" id="connection">
+      <h2 class="section-title en">How components and tokens connect</h2>
+      <h2 class="section-title es">Cómo conectan componentes y tokens</h2>
+
+      <div class="en"><p>The full chain from design source to working component. Every arrow goes one way.</p></div>
+      <div class="es"><p>La cadena completa desde la fuente de diseño hasta un componente funcionando. Cada flecha va en un solo sentido.</p></div>
+
+      <div class="diagram">
+<pre>
+Figma file  (design source — READ, never auto-swept)
+    │
+    ▼  hand-measured → written as a research doc
+docs/research/&lt;name&gt;.md
+    │
+    ▼  open questions become decisions
+docs/ADR/&lt;number&gt;-&lt;name&gt;.md
+    │
+    ├─────────────────────────────────────────┐
+    ▼                                         ▼
+packages/tokens/tokens/*.json     packages/contracts/components/
+(DTCG source)                      &lt;Name&gt;/&lt;Name&gt;.contract.json
+    │                                         │
+    ▼  Style Dictionary                       ▼  React binding
+packages/tokens/build/            packages/react/bindings/
+  *.css → CSS custom props          &lt;Name&gt;.react.json
+  *.ts  → typed constants
+    │                                         │
+    └────────────────────────────────────────▼
+                            packages/react/src/
+                             &lt;Name&gt;.tsx + &lt;Name&gt;.module.css
+                                    │
+                                    ▼  Vite builds it
+                            packages/react/dist/
+                             (ESM + CJS + .d.ts + stylesheet)
+                                    │
+                                    ▼
+                            apps/sandbox/ or consumer app
+</pre>
+      </div>
+
+      <div class="en">
+        <p class="term"><code>tokens/*.json</code></p>
+        <p>Source of truth for every design value. Written in DTCG. Empty until measured from Figma. Primitives reference nothing; semantics reference primitives; component slots reference semantics.</p>
+        <p class="term"><code>packages/tokens/build/</code></p>
+        <p>Compiled output. Style Dictionary writes CSS custom properties (<code>--ds-color-fill-loud</code>) and typed TS constants. Components read these — never the raw JSON.</p>
+        <p class="term"><code>&lt;Name&gt;.contract.json</code></p>
+        <p>What the component IS. Framework-agnostic. Declares anatomy, states, axes, and the token policy: which CSS channel each part exposes and which token family may supply it. A contract does not say <em>what</em> to use — it says <em>which socket exists</em> for a consumer to wire.</p>
+        <p class="term"><code>&lt;Name&gt;.react.json</code></p>
+        <p>React-specific binding: which HTML element renders, where the ref lands, which part absorbs <code>className</code>. Everything else lives in the contract.</p>
+        <p class="term"><code>&lt;Name&gt;.tsx</code></p>
+        <p>Component code. Uses CVA to map axis values to CSS classes. Named nodes carry <code>data-ds-part="x"</code> (public styling target) and <code>className={styles.x}</code>. Never hard-codes a token value — always <code>var(--ds-color-fill-loud)</code>.</p>
+        <p class="term"><code>&lt;Name&gt;.module.css</code></p>
+        <p>Component styles. References token CSS variables. Hashed class names are the private implementation; <code>data-*</code> attributes are the public surface a consumer targets.</p>
+      </div>
+      <div class="es">
+        <p class="term"><code>tokens/*.json</code></p>
+        <p>Fuente de verdad para cada valor de diseño. Escrito en DTCG. Vacío hasta que se mide desde Figma. Los primitivos no referencian nada; los semánticos referencian primitivos; los slots de componentes referencian semánticos.</p>
+        <p class="term"><code>packages/tokens/build/</code></p>
+        <p>Output compilado. Style Dictionary escribe propiedades CSS custom (<code>--ds-color-fill-loud</code>) y constantes TS tipadas. Los componentes leen esto — nunca el JSON crudo.</p>
+        <p class="term"><code>&lt;Nombre&gt;.contract.json</code></p>
+        <p>Lo que el componente ES. Agnóstico de framework. Declara anatomía, estados, ejes, y la política de tokens: qué canal CSS expone cada parte y qué familia de token puede suministrarlo. Un contrato no dice <em>qué</em> usar — dice <em>qué socket existe</em> para que un consumidor lo conecte.</p>
+        <p class="term"><code>&lt;Nombre&gt;.react.json</code></p>
+        <p>Binding React-específico: qué elemento HTML renderiza, dónde aterriza la ref, qué parte absorbe <code>className</code>. Todo lo demás vive en el contrato.</p>
+        <p class="term"><code>&lt;Nombre&gt;.tsx</code></p>
+        <p>Código del componente. Usa CVA para mapear valores de eje a clases CSS. Los nodos nombrados llevan <code>data-ds-part="x"</code> (objetivo de estilo público) y <code>className={styles.x}</code>. Nunca hardcodea un valor de token — siempre <code>var(--ds-color-fill-loud)</code>.</p>
+        <p class="term"><code>&lt;Nombre&gt;.module.css</code></p>
+        <p>Estilos del componente. Referencia variables CSS de tokens. Los nombres de clase hasheados son la implementación privada; los atributos <code>data-*</code> son la superficie pública que apunta un consumidor.</p>
+      </div>
+
+      <p class="note en">Personal learning notes — Kraken DS / weave-ds-template by Cristian Achiardi. Update whenever a new term appears. Never edit generated files based on this.</p>
+      <p class="note es">Notas de aprendizaje personal — Kraken DS / weave-ds-template por Cristian Achiardi. Actualizar cuando aparezca un nuevo término. Nunca editar archivos generados basándose en esto.</p>
+
+    </section>
+
+  </main>
+</div>
+
+<script>
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+  try { localStorage.setItem('glossary-lang', lang); } catch(e) {}
+}
+
+// Init from localStorage or default to 'en'
+(function() {
+  var saved = 'en';
+  try { saved = localStorage.getItem('glossary-lang') || 'en'; } catch(e) {}
+  setLang(saved);
+})();
+
+// Sidebar active state on scroll
+(function() {
+  var sections = document.querySelectorAll('.section[id]');
+  var navLinks = document.querySelectorAll('.nav-list a');
+  var headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 52;
+
+  function onScroll() {
+    var scrollY = window.scrollY;
+    var active = null;
+    sections.forEach(function(s) {
+      if (s.offsetTop - headerH - 32 <= scrollY) active = s.id;
+    });
+    navLinks.forEach(function(a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + active);
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>
